@@ -1,0 +1,26 @@
+name: Test docker before merge
+on:
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: docker build --tag memgen .
+      - name: Run Docker
+        run: docker run -d --name app -p 80:3000 memgen
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install the necessary packages
+        run: pip install requests webdriver-manager==3.8.6 selenium pytest
+      - name: Run the PytTest script
+        env:  # Set the HOST environment variable for the test script
+          HOST: ${{ secrets.HOST }}
+        run: pytest -rA
+
+
+
