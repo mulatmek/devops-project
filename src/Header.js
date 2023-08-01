@@ -5,7 +5,7 @@ function Header() {
   return (
     <div className="App">
       <header>
-        <h1>BEST DEVOPS PROJECT EVER</h1>
+        <h1>Meme Generatore Devops</h1>
       </header>
     </div>
   );
